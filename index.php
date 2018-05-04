@@ -13,8 +13,18 @@
          <li><a href="kuvat.php">Ladatut kuvat</a></li>
        </ul>
      </nav>
-
 <?php
+  $tietokantayhteys =
+  mysqli_connect ("localhost", "", "", "");
+  if(mysqli_connect_errno()) {
+    echo "Yhteysvirhe tietokantaan: " . mysqli_connect_error();
+  }
+
+  $nimetty = $_POST['nimetty'];
+
+
+
+
   if(isset($_POST['submit'])) {
     $tmp_file = $_FILES['kuva']['tmp_name'];
     $target_file = basename($_FILES['kuva']['name']);
@@ -28,7 +38,7 @@
   }
 ?>
      <form action="index.php" enctype="multipart/form-data" method="POST">
-       <input type="file" name="kuva" />
+       <input type="file" name="kuva" /><br>
        Nimi: <input type="text" name="nimetty"><br>
        <input type="submit" name="submit" value="Lataa" />
      </form>
