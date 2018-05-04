@@ -14,16 +14,32 @@
        </ul>
      </nav>
 <?php
+  //Otetaan yhteys tietokantaan
   $tietokantayhteys =
   mysqli_connect ("", "okp", "oli9tRR3", "johanna_okp");
   if(mysqli_connect_errno()) {
     echo "Yhteysvirhe tietokantaan: " . mysqli_connect_error();
   }
 
+
+  // Kuvan lataus
+    if(isset($_POST['submit'])) {
+      $tmp_file = $_FILES['kuva']['tmp_name'];
+      $target_file = basename($_FILES['kuva']['name']);
+      $TargetPath=time().$tmp_file;
+      $upload_dir = "uploads";
+
+      if(move_uploaded_file($tmp_file, $upload_dir."/".$target_file)){
+        echo "Tiedosto ladattu onnistuneesti.";
+      } else {
+        echo $_FILES['kuva']['error'];
+      }
+    }
+
+  // Tallennetaan tietoja kuvista tauluun kuvat
   $nimetty = $_POST['nimi'];
 
-  $query  = "INSERT INTO kuvat (nimi)
-          VALUES ('".$_POST["nimi"]."')";
+  $query  = "INSERT INTO kuvat (nimi, polku) VALUES ('".$_POST["nimi"]."', '".$TargetPath."')";
 
           $result = mysqli_query($tietokantayhteys, $query);
           if ($result) {
@@ -33,25 +49,11 @@
 
           mysqli_close($tietokantayhteys);
 
-
-  if(isset($_POST['submit'])) {
-    $tmp_file = $_FILES['kuva']['tmp_name'];
-    $target_file = basename($_FILES['kuva']['name']);
-    $upload_dir = "uploads";
-
-    if(move_uploaded_file($tmp_file, $upload_dir."/".$target_file)){
-      echo "Tiedosto ladattu onnistuneesti.";
-    } else {
-      echo $_FILES['kuva']['error'];
-    }
-  }
 ?>
      <form action="index.php" enctype="multipart/form-data" method="POST">
        <input type="file" name="kuva" /><br>
        Nimi: <input type="text" name="nimi"><br>
        <input type="submit" name="submit" value="Lataa" />
      </form>
-
-
    </body>
 </html>
