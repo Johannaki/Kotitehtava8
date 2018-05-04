@@ -15,14 +15,23 @@
      </nav>
 <?php
   $tietokantayhteys =
-  mysqli_connect ("localhost", "", "", "");
+  mysqli_connect ("", "okp", "oli9tRR3", "johanna_okp");
   if(mysqli_connect_errno()) {
     echo "Yhteysvirhe tietokantaan: " . mysqli_connect_error();
   }
 
-  $nimetty = $_POST['nimetty'];
+  $nimetty = $_POST['nimi'];
 
+  $query  = "INSERT INTO kuvat (nimi)
+          VALUES ('".$_POST["nimi"]."')";
 
+          $result = mysqli_query($tietokantayhteys, $query);
+          if ($result) {
+          } else {
+              die("No voi. " . mysqli_error($tietokantayhteys));
+          }
+
+          mysqli_close($tietokantayhteys);
 
 
   if(isset($_POST['submit'])) {
@@ -39,7 +48,7 @@
 ?>
      <form action="index.php" enctype="multipart/form-data" method="POST">
        <input type="file" name="kuva" /><br>
-       Nimi: <input type="text" name="nimetty"><br>
+       Nimi: <input type="text" name="nimi"><br>
        <input type="submit" name="submit" value="Lataa" />
      </form>
 
