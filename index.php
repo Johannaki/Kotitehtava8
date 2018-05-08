@@ -16,7 +16,7 @@
 <?php
   //Otetaan yhteys tietokantaan
   $tietokantayhteys =
-  mysqli_connect ("", "", "", "");
+  mysqli_connect ("", "okp", "oli9tRR3", "johanna_okp");
   if(mysqli_connect_errno()) {
     echo "Yhteysvirhe tietokantaan: " . mysqli_connect_error();
   }
@@ -35,10 +35,12 @@
       }
     }
 
+
   // Tallennetaan tietoja kuvista tauluun kuvat
   $nimetty = $_POST['nimi'];
 
-  $query  = "INSERT INTO kuvat (nimi) VALUES ('".$_POST["nimi"]."')";
+
+  $query  = "INSERT INTO kuvat (nimi, tmp_name, polku, aika) VALUES ('".$_POST["nimi"]."','".$_FILES['kuva']['name']."', '".$upload_dir."', '".time()."')";
 
           $result = mysqli_query($tietokantayhteys, $query);
           if ($result) {
