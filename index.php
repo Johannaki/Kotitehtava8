@@ -16,7 +16,7 @@
 <?php
   //Otetaan yhteys tietokantaan
   $tietokantayhteys =
-  mysqli_connect ("", "okp", "oli9tRR3", "johanna_okp");
+  mysqli_connect ("", "", "", "");
   if(mysqli_connect_errno()) {
     echo "Yhteysvirhe tietokantaan: " . mysqli_connect_error();
   }
