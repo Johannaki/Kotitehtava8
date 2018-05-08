@@ -26,7 +26,6 @@
     if(isset($_POST['submit'])) {
       $tmp_file = $_FILES['kuva']['tmp_name'];
       $target_file = basename($_FILES['kuva']['name']);
-      $TargetPath=time().$tmp_file;
       $upload_dir = "uploads";
 
       if(move_uploaded_file($tmp_file, $upload_dir."/".$target_file)){
@@ -39,7 +38,7 @@
   // Tallennetaan tietoja kuvista tauluun kuvat
   $nimetty = $_POST['nimi'];
 
-  $query  = "INSERT INTO kuvat (nimi, polku) VALUES ('".$_POST["nimi"]."', '".$TargetPath."')";
+  $query  = "INSERT INTO kuvat (nimi) VALUES ('".$_POST["nimi"]."')";
 
           $result = mysqli_query($tietokantayhteys, $query);
           if ($result) {
